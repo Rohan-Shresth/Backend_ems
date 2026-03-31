@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterCard() {
@@ -8,6 +9,8 @@ export default function RegisterCard() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [phone, setPhone] = useState("+977 ");
+
+  const navigate = useNavigate();
 
   // Live password match check
   useEffect(() => {
@@ -34,9 +37,11 @@ export default function RegisterCard() {
       setError("Phone number must be 10 digits long!");
     } else {
       setError("");
-      alert("Account created successfully!");
+      // alert("Account created successfully!");
       // proceed with form submission
     }
+
+    navigate("/otp");
   };
 
   // Phone input change handler
@@ -188,6 +193,7 @@ export default function RegisterCard() {
           {error && <p className="text-red-500 mt-1">{error}</p>}
 
           <button
+            // onSubmit={handleSubmit}
             type="submit"
             className="btn w-full mt-4 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 cursor-pointer"
           >
