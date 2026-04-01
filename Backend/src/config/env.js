@@ -52,7 +52,19 @@ const env = {
   })(),
   mongodbUri: process.env.MONGODB_URI,
   jwtSecret: process.env.JWT_SECRET,
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d'
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
+  otpExpiresMinutes: (() => {
+    const raw = process.env.OTP_EXPIRES_MINUTES;
+    if (!raw) return 10;
+    const parsed = Number(raw);
+    return Number.isNaN(parsed) || parsed <= 0 ? 10 : parsed;
+  })(),
+  otpMaxAttempts: (() => {
+    const raw = process.env.OTP_MAX_ATTEMPTS;
+    if (!raw) return 5;
+    const parsed = Number(raw);
+    return Number.isNaN(parsed) || parsed <= 0 ? 5 : parsed;
+  })()
 };
 
 module.exports = env;

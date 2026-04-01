@@ -30,6 +30,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['user', 'organizer', 'admin'],
       default: 'user'
+    },
+    otpCodeHash: {
+      type: String,
+      default: null
+    },
+    otpExpiresAt: {
+      type: Date,
+      default: null
+    },
+    otpAttempts: {
+      type: Number,
+      default: 0
+    },
+    otpVerifiedAt: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }

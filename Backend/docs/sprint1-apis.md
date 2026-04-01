@@ -41,6 +41,30 @@ Purpose: Get current logged-in profile.
 Auth: Bearer token required
 Response: `200 OK` with user profile.
 
+### POST `/auth/otp/send`
+Purpose: Generate OTP for an existing user.
+Auth: No
+Body:
+```json
+{
+  "email": "aarav@example.com"
+}
+```
+Response: `200 OK` with OTP expiry info.
+In non-production environments, the generated OTP is returned in response for testing.
+
+### POST `/auth/otp/verify`
+Purpose: Verify OTP and issue auth token.
+Auth: No
+Body:
+```json
+{
+  "email": "aarav@example.com",
+  "otp": "123456"
+}
+```
+Response: `200 OK` with `token` and `user`.
+
 ## 3) Event APIs
 ### POST `/events`
 Purpose: Create an event.

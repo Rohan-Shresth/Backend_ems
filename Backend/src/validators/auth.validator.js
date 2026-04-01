@@ -53,7 +53,37 @@ function validateLoginPayload(payload) {
   }
 }
 
+function validateSendOtpPayload(payload) {
+  const errors = [];
+
+  if (!payload.email || !isEmail(payload.email)) {
+    errors.push('A valid email is required');
+  }
+
+  if (errors.length) {
+    throw new AppError(errors.join(', '), HTTP_STATUS.BAD_REQUEST);
+  }
+}
+
+function validateVerifyOtpPayload(payload) {
+  const errors = [];
+
+  if (!payload.email || !isEmail(payload.email)) {
+    errors.push('A valid email is required');
+  }
+
+  if (!payload.otp || !/^\d{6}$/.test(String(payload.otp))) {
+    errors.push('otp must be a 6-digit code');
+  }
+
+  if (errors.length) {
+    throw new AppError(errors.join(', '), HTTP_STATUS.BAD_REQUEST);
+  }
+}
+
 module.exports = {
   validateRegisterPayload,
-  validateLoginPayload
+  validateLoginPayload,
+  validateSendOtpPayload,
+  validateVerifyOtpPayload
 };
