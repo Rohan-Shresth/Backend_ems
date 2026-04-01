@@ -19,10 +19,11 @@ Body:
   "phone": "+9779812345678",
   "email": "aarav@example.com",
   "password": "secret123",
-  "role": "user"
+  "role": "student"
 }
 ```
 Response: `201 Created` with `token` and `user`.
+Supported roles: `student`, `vendor`, `event_planner`, `admin`.
 
 ### POST `/auth/login`
 Purpose: Login existing user.
@@ -68,7 +69,7 @@ Response: `200 OK` with `token` and `user`.
 ## 3) Event APIs
 ### POST `/events`
 Purpose: Create an event.
-Auth: Bearer token required (`organizer` or `admin`)
+Auth: Bearer token required (`event_planner` or `admin`)
 Body:
 ```json
 {

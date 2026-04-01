@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ROLES } = require('../constants/roles');
 
 const userSchema = new mongoose.Schema(
   {
@@ -28,8 +29,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'organizer', 'admin'],
-      default: 'user'
+      enum: [ROLES.STUDENT, ROLES.VENDOR, ROLES.EVENT_PLANNER, ROLES.ADMIN],
+      default: ROLES.STUDENT
     },
     otpCodeHash: {
       type: String,

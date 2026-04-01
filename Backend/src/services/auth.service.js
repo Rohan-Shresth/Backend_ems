@@ -5,6 +5,7 @@ const env = require('../config/env');
 const userRepository = require('../repositories/user.repository');
 const AppError = require('../utils/appError');
 const HTTP_STATUS = require('../constants/httpStatus');
+const { ROLES, normalizeRole } = require('../constants/roles');
 
 class AuthService {
   async register(payload) {
@@ -15,12 +16,14 @@ class AuthService {
 
     const passwordHash = await bcrypt.hash(payload.password, 10);
 
+    const role = normalizeRole(payload.role) || ROLES.STUDENT;
+
     const user = await userRepository.create({
       fullName: payload.fullName,
       phone: payload.phone,
       email: payload.email.toLowerCase(),
       passwordHash,
-      role: payload.role || 'user'
+      role
     });
 
     const token = this.#buildToken(user);
