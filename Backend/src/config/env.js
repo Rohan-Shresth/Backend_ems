@@ -42,6 +42,10 @@ requiredVars.forEach((envVar) => {
 
 validateMongoUri(process.env.MONGODB_URI);
 
+if (process.env.MONGODB_URI_DIRECT) {
+  validateMongoUri(process.env.MONGODB_URI_DIRECT);
+}
+
 const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   port: (() => {
@@ -51,6 +55,7 @@ const env = {
     return Number.isNaN(parsed) ? 5000 : parsed;
   })(),
   mongodbUri: process.env.MONGODB_URI,
+  mongodbDirectUri: process.env.MONGODB_URI_DIRECT || '',
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
   otpExpiresMinutes: (() => {

@@ -43,6 +43,9 @@ npm run dev
 `PORT=0` means Node chooses a free port automatically.
 Check terminal log: `Server running on port <port>`, then use `http://localhost:<port>/api/v1`.
 
+If you see `querySrv ECONNREFUSED _mongodb._tcp...`, your network is blocking SRV DNS.
+Set `MONGODB_URI_DIRECT` in `.env` (Atlas direct `mongodb://...` format) and restart.
+
 ## Sprint 1 Modules
 
 - Auth Module (`/auth`)
