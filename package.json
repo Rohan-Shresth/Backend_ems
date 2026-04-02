@@ -1,0 +1,9 @@
+{
+  "name": "event-management-system",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix Backend run start",
+    "dev": "npm --prefix Backend run dev",
+    "check": "npm --prefix Backend run check"
+  }
+}
