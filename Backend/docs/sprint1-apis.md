@@ -43,7 +43,7 @@ Auth: Bearer token required
 Response: `200 OK` with user profile.
 
 ### POST `/auth/otp/send`
-Purpose: Generate OTP for an existing user.
+Purpose: Generate OTP for an existing user and send it to their email.
 Auth: No
 Body:
 ```json
@@ -52,7 +52,8 @@ Body:
 }
 ```
 Response: `200 OK` with OTP expiry info.
-In non-production environments, the generated OTP is returned in response for testing.
+The generated OTP is emailed using SMTP.
+Optional debug mode: if `OTP_EXPOSE_IN_RESPONSE=true`, the OTP is also included in the API response.
 
 ### POST `/auth/otp/verify`
 Purpose: Verify OTP and issue auth token.

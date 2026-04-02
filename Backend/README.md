@@ -46,6 +46,26 @@ Check terminal log: `Server running on port <port>`, then use `http://localhost:
 If you see `querySrv ECONNREFUSED _mongodb._tcp...`, your network is blocking SRV DNS.
 Set `MONGODB_URI_DIRECT` in `.env` (Atlas direct `mongodb://...` format) and restart.
 
+## OTP Email Setup (SMTP)
+
+To send OTP to real inboxes, configure these in `.env`:
+
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_SECURE`
+- `SMTP_USER`
+- `SMTP_PASS`
+- `SMTP_FROM_EMAIL`
+- `SMTP_FROM_NAME`
+
+For Gmail, use an App Password and set:
+
+- `SMTP_HOST=smtp.gmail.com`
+- `SMTP_PORT=587`
+- `SMTP_SECURE=false`
+
+Keep `OTP_EXPOSE_IN_RESPONSE=false` to avoid leaking OTP in API responses.
+
 ## Sprint 1 Modules
 
 - Auth Module (`/auth`)

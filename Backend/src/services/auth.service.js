@@ -6,6 +6,7 @@ const userRepository = require('../repositories/user.repository');
 const AppError = require('../utils/appError');
 const HTTP_STATUS = require('../constants/httpStatus');
 const { ROLES, normalizeRole } = require('../constants/roles');
+const emailService = require('./email.service');
 
 class AuthService {
   async register(payload) {
@@ -89,10 +90,29 @@ class AuthService {
     user.otpAttempts = 0;
     await user.save();
 
+    try {
+      await emailService.sendOtpEmail({
+        toEmail: user.email,
+        fullName: user.fullName,
+        otp,
+        expiresInMinutes: env.otpExpiresMinutes
+      });
+    } catch (error) {
+      user.otpCodeHash = null;
+      user.otpExpiresAt = null;
+      user.otpAttempts = 0;
+      await user.save();
+
+      throw new AppError(
+        `Failed to send OTP email. ${error.message}`,
+        HTTP_STATUS.INTERNAL_SERVER_ERROR
+      );
+    }
+
     return {
       message: 'OTP sent successfully',
       expiresInMinutes: env.otpExpiresMinutes,
-      ...(env.nodeEnv !== 'production' ? { otp } : {})
+      ...(env.otpExposeInResponse ? { otp } : {})
     };
   }
 
