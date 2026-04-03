@@ -46,7 +46,7 @@ const sendOtp = asyncHandler(async (req, res) => {
 
   res.status(HTTP_STATUS.OK).json({
     success: true,
-    message: 'OTP generated successfully',
+    message: 'OTP sent successfully',
     data
   });
 });

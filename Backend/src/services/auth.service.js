@@ -91,12 +91,22 @@ class AuthService {
     await user.save();
 
     try {
-      await emailService.sendOtpEmail({
+      const delivery = await emailService.sendOtpEmail({
         toEmail: user.email,
         fullName: user.fullName,
         otp,
         expiresInMinutes: env.otpExpiresMinutes
       });
+
+      if (env.nodeEnv !== 'production') {
+        console.log('[OTP EMAIL]', {
+          to: user.email,
+          messageId: delivery.messageId,
+          accepted: delivery.accepted,
+          rejected: delivery.rejected,
+          smtpResponse: delivery.response
+        });
+      }
     } catch (error) {
       user.otpCodeHash = null;
       user.otpExpiresAt = null;

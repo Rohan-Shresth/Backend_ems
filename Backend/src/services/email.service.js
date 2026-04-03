@@ -35,7 +35,7 @@ class EmailService {
   async sendOtpEmail({ toEmail, fullName, otp, expiresInMinutes }) {
     const transporter = this.#getTransporter();
 
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"${env.smtpFromName}" <${env.smtpFromEmail}>`,
       to: toEmail,
       subject: 'Your OTP Code',
@@ -50,6 +50,25 @@ class EmailService {
         </div>
       `
     });
+
+    const normalizedTo = String(toEmail || '').trim().toLowerCase();
+    const acceptedRecipients = (info.accepted || []).map((value) => String(value).trim().toLowerCase());
+    const rejectedRecipients = (info.rejected || []).map((value) => String(value).trim().toLowerCase());
+
+    if (acceptedRecipients.length === 0 || !acceptedRecipients.includes(normalizedTo)) {
+      throw new Error(
+        `SMTP did not accept recipient ${toEmail}. Accepted: ${
+          acceptedRecipients.join(', ') || 'none'
+        }. Rejected: ${rejectedRecipients.join(', ') || 'none'}.`
+      );
+    }
+
+    return {
+      messageId: info.messageId,
+      accepted: info.accepted || [],
+      rejected: info.rejected || [],
+      response: info.response || ''
+    };
   }
 }
 
