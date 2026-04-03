@@ -1,0 +1,6 @@
+
+> event-management-backend@1.0.0 start
+> node src/server.js
+
+MongoDB connected successfully
+Server running on port 51576
