@@ -73,3 +73,4 @@ Keep `OTP_EXPOSE_IN_RESPONSE=false` to avoid leaking OTP in API responses.
 - Registration Module (`/registrations`)
 
 Detailed endpoint docs: [docs/sprint1-apis.md](./docs/sprint1-apis.md)
+Project structure docs: [docs/project-structure.md](./docs/project-structure.md)
