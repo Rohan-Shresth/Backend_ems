@@ -74,4 +74,3 @@ Keep `OTP_EXPOSE_IN_RESPONSE=false` to avoid leaking OTP in API responses.
 
 Detailed endpoint docs: [docs/sprint1-apis.md](./docs/sprint1-apis.md)
 Project structure docs: [docs/project-structure.md](./docs/project-structure.md)
-Frontend localStorage auth helper: [docs/local-storage-auth.md](./docs/local-storage-auth.md)
